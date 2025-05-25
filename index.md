@@ -3,6 +3,22 @@
 I'm Bobby, an Android Dev and (still) an app hobbyist
 
 ## Recent TIL
+
+### [Jetpack Compose: Debugging recomposition](https://www.youtube.com/watch?v=SWBN0y0lFNY)
+###### Date: 2025/05/25
+
+Three Phase in Compose
+
+1. Composition: What UI to show, building tree of composables
+2. Layout: Where to Place UI, layout take those composables and works out where on the screen they will be shown
+3. Drawing: How it renders, Draw everything to screen
+
+Compose can skip a phase entirely if nothing has changed in it
+
+Prefer lambda modifiers when using frequently changing state, the video show case is using the scroll provider lambda over y property when performing translation, and reading the state inside the graphicsLayer
+
+---
+
 ### [Android Api Level](https://apilevels.com)
 ###### Date: 2025/01/03
 
