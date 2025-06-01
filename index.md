@@ -2,6 +2,10 @@
 
 I'm Bobby, an Android Dev and (still) an app hobbyist
 
+## Current Project
+
+- [QRGen](https://bobbyprabowo.com/qrgen) : QR Code Generator for Android
+
 ## Recent TIL
 
 ### [Jetpack Compose: Debugging recomposition](https://www.youtube.com/watch?v=SWBN0y0lFNY)
