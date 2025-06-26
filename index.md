@@ -8,6 +8,22 @@ I'm Bobby, an Android Dev and (still) an app hobbyist
 
 ## Recent TIL
 
+### [Android Makers: How to keep your app's secrets, secret](https://www.youtube.com/watch?v=H-wdOLCIiXA)
+###### Date: 2025/06/26
+
+Interesting tools (approach)
+1. [Secrets Gradle Plugin for Android](https://developers.google.com/maps/documentation/android-sdk/secrets-gradle-plugin) using the same approach as the Google Maps SDK
+2. [gitleaks](https://gitleaks.io/) a Static analytics tools
+3. `git filter-branch` manually check git history
+4. [git-filter-repo](https://github.com/newren/git-filter-repo) remove logged secret changes by rewrite git history (using python)
+5. [BFG Repo-cleaner](https://rtyley.github.io/bfg-repo-cleaner/) remove logged secret changes by rewrite git history (using scala)
+6. [hidden-secrets-gradle-plugin](https://github.com/klaxit/hidden-secrets-gradle-plugin) uses ndk with XOR (may be not maintained last commit are 2 years ago)
+7. [bytemask](https://patilshreyas.github.io/bytemask/introduction.html) mask secrets that make it difficult to reverse engineering
+8. [Sekret](https://github.com/DatL4g/Sekret) store secrets on NDK using KMM plugin, also provide secure logging by using for annotated compatible string/char property
+9. Own API proxy servers
+
+---
+
 ### [Jetpack Compose: Debugging recomposition](https://www.youtube.com/watch?v=SWBN0y0lFNY)
 ###### Date: 2025/05/25
 
