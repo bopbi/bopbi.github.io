@@ -27,6 +27,11 @@ The problem is, teams often don’t have a clear agreement on how to do it, whic
 
 When i stumbled upon the AOP Concept it might the proper framework to help implementing the logs, lets see whether this one can help
 
+to fix the java 11 requirement, need to install java 11 first, and add the line below on root `gradle.properties` then sync the project
+```
+org.gradle.java.home=/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
+```
+
 ---
 
 ### [Android Makers: How to keep your app's secrets, secret](https://www.youtube.com/watch?v=H-wdOLCIiXA)
