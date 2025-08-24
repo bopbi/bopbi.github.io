@@ -8,6 +8,27 @@ I'm Bobby, an Android Dev and (still) an app hobbyist
 
 ## Recent TIL
 
+<!-- Post Template
+
+### [Title](Url)
+###### Date: 2025/08/24
+
+Content here
+
+---
+
+-->
+
+### [Android AOP](https://flyjingfish.github.io/AndroidAOP/)
+###### Date: 2025/01/03
+
+These days, an app isn’t just about building features — it also needs proper logging (performance, analytics).
+The problem is, teams often don’t have a clear agreement on how to do it, which leads to confusion when debugging and makes the business logic messy with logging code.
+
+When i stumbled upon the AOP Concept it might the proper framework to help implementing the logs, lets see whether this one can help
+
+---
+
 ### [Android Makers: How to keep your app's secrets, secret](https://www.youtube.com/watch?v=H-wdOLCIiXA)
 ###### Date: 2025/06/26
 
