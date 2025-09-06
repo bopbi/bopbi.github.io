@@ -19,8 +19,15 @@ Content here
 
 -->
 
+### [Android Vitals Series](https://dev.to/pyricau/series/7827)
+###### Date: 2025/09/24
+
+Series of Article about Android Performance
+
+---
+
 ### [Android AOP](https://flyjingfish.github.io/AndroidAOP/)
-###### Date: 2025/01/03
+###### Date: 2025/08/03
 
 These days, an app isn’t just about building features — it also needs proper logging (performance, analytics).
 The problem is, teams often don’t have a clear agreement on how to do it, which leads to confusion when debugging and makes the business logic messy with logging code.
