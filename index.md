@@ -19,8 +19,99 @@ Content here
 
 -->
 
+### [DroidKaigi Day 1](https://2025.droidkaigi.jp/en/timetable/9-11/)
+###### Date: 2025/09/11
+
+#### Building with AI in Kotlin
+Talks is presented by Jetbrains Dev Rels
+
+##### AI Assisted Coding in Kotlin on the IntelliJ Ultimate
+Although the AI demo is mostly from a Video, its demoing Interesting stuff:
+- Offline Code Assistance
+- In-Editor Code Generation
+- Agent Assisted Junie (EAP)
+- Bytecode manipulation
+- AI code generation using Project guideline
+
+##### Building AI
+- Existing MCP SDK from OpenAI, Anthropic
+- Koog (AI Agent Framework) that can generate code on various platform (web / native) and can use major vendors LLM (somehow the promoted openrouter service, the openrouter UI remind me of ollama)
+- first demo is a question and answer
+- Message History, and Node (input trigger node type response, node can be chained)
+- Koog can be used with any MCP (MCP can be found in mcpmarket)
+- History compression to improve the resulted action since AI have issue if the context is too large
+
+#### Composables beyond UI
+
+##### Compose Concept
+The Session begins with explaining how the Compose Work
+- Composition Tree -> State Change -> Runtime will Recompose
+- Compose Tree, ReusableComposeNode
+
+##### Applying Compose to Audio Processing
+Case [Koruri](https://github.com/Koruri/Koruri) Declarative Audio Processing Library
+Wave manipulation (pitch, volume) drawed as a block
+```
+Chain {
+  SineWave()
+  Volume()
+}
+
+Mix {
+  SineWave()
+  SineWave()
+}
+```
+the interesting is, the library is complete the Compose capability to making a multimedia (Synthesizer), since now the wave manipulation can integrate seamlessly in the same approach in composable structure and state (UI state like touch or slide)
+
+#### Gen AI for Developers
+
+- Cases of extracting info from a application UI (Chat App)
+- Gemini nano capabilities, latest is nano V3
+- Gemini nano improvement changes according to the device
+- Dev need to Understand LLM "thinks" differently with human
+- Preprocessing (Tokenization, Embedding) -> Decode (Auto Completer, Self Attention, Output Probablities)
+
+Tips when make Gen AI (Prompt Handling)
+- Start Small => a simple prompt can be something with multiple steps (workflow)
+- Test and Test: Recommended Sample is 200 diverse item, metric to evaluate quality, Evaluate -> Refine Iterate
+- Creative in Testing (like over the sample)
+- Avoid hallucinations
+- Emotional Stimuli
+- Reframe your Prompt
+- Common Practise (Proper Role / Persona, Premise Order Matter, add Delimiter, Write Prompt in English)
+- Magic cue auto suggest
+- start with d.android.com/ai kaggle.com/whitepaper-prompt-engineering
+
+---
+
+#### Android Librarian guide
+
+- Care only public interface
+- Minimize API Surface (internal + @JvmSynthetic, Kotlin explicitAPI)
+- API Lifecycle by Deprecated Annotation (message, replaceWith, level), or Compatibility Table
+- Tools to check Binary Complatibility issue
+  - Binary Complatibility Validator Plugin by Jetbrains (generate .api files), product flavors
+  - Metalava from Google
+  - above can be hooks it on CI pipeline
+- UI in Library
+  - AAR file format
+  - Minimizing Exposed Library => Transitive Resource
+    - Public tag on the xml file (public.xml)
+    - resourcePrefix in build.gradle
+  - Dependency can go to the library dependency (Transitive Dependency)
+  - Transitive R class
+  - Transitive Class (Dex Limit), but non Transitive Class are enabled by default on Gradle 8.0
+
+#### Server Driven UI
+
+- Complex JSON that can parsed to generate UI
+- Demo can reflect the json changes on the fly (font style, position, and complex UI)
+
+---
+
 ### [Android Vitals Series](https://dev.to/pyricau/series/7827)
-###### Date: 2025/09/24
+###### Date: 2025/08/24
 
 Series of Article about Android Performance
 
