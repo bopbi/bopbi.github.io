@@ -65,7 +65,6 @@ Mix {
 the interesting is, the library is complete the Compose capability to making a multimedia (Synthesizer), since now the wave manipulation can integrate seamlessly in the same approach in composable structure and state (UI state like touch or slide)
 
 #### Gen AI for Developers
-
 - Cases of extracting info from a application UI (Chat App)
 - Gemini nano capabilities, latest is nano V3
 - Gemini nano improvement changes according to the device
@@ -83,10 +82,7 @@ Tips when make Gen AI (Prompt Handling)
 - Magic cue auto suggest
 - start with d.android.com/ai kaggle.com/whitepaper-prompt-engineering
 
----
-
 #### Android Librarian guide
-
 - Care only public interface
 - Minimize API Surface (internal + @JvmSynthetic, Kotlin explicitAPI)
 - API Lifecycle by Deprecated Annotation (message, replaceWith, level), or Compatibility Table
@@ -104,7 +100,6 @@ Tips when make Gen AI (Prompt Handling)
   - Transitive Class (Dex Limit), but non Transitive Class are enabled by default on Gradle 8.0
 
 #### Server Driven UI
-
 - Complex JSON that can parsed to generate UI
 - Demo can reflect the json changes on the fly (font style, position, and complex UI)
 
