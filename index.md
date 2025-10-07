@@ -19,7 +19,7 @@ Content here
 
 -->
 
-### [Benchmark Gist]
+### Benchmark Gist
 ###### Date: 2025/10/07
 ```
 // module: benchmark
