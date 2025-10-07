@@ -19,6 +19,34 @@ Content here
 
 -->
 
+### [Benchmark Gist]
+###### Date: 2025/10/07
+```
+// module: benchmark
+// androidx.benchmark:benchmark-macro + benchmark-junit4
+class MapperBenchmark {
+    @Test fun mapList_1000() = benchmarkRule.measureRepeated {
+        val dtos = buildFakeDtos(1000)
+        runWithTimingDisabled { /* warmup/setup */ }
+        UserMapper.mapList(dtos)
+    }
+}
+```
+
+### [DroidKaigi Day 2](https://2025.droidkaigi.jp/en/timetable/9-12/)
+###### Date: 2025/09/11
+
+#### Composifying Your Not-Compose Code
+- show technique to pass lifecycle event to an Android View inside Composable
+- tips to handle it
+
+#### Data structure
+- Set is faster than list
+- Core of LRU Chache is LinkedListHashSet
+- Dagger using acyclic graph since circular depencency should not allowed
+
+---
+
 ### [DroidKaigi Day 1](https://2025.droidkaigi.jp/en/timetable/9-11/)
 ###### Date: 2025/09/11
 
