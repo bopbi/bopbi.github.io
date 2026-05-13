@@ -98,7 +98,7 @@ Rules:
 - Radio groups that are UI-only (not persisted or validated server-side, e.g. komunitas `tipe`) should be marked `opsional`.
 - When you add a new field, update its label marker in the **same** commit as the handler validation — never let the two drift.
 
-This is the counterpart to the honeypot / CSRF / rate-limit patterns in `security-auth.md` and `security-validation.md`: a form that asks for data must also tell the user what it expects.
+This is the counterpart to the honeypot / CSRF / rate-limit patterns in `security.md`: a form that asks for data must also tell the user what it expects.
 
 ### Inline feedback messages (ErrorMsg / SuccessMsg)
 
@@ -190,22 +190,13 @@ The call is always fire-and-forget (`go ...`) — SMTP latency must never block 
 
 | Var | Example | Required |
 |---|---|---|
-| `SMTP_HOST` | `smtp.resend.com` | Yes (disables notifications if missing) |
-| `SMTP_PORT` | `465` | No (defaults to `587`; Resend supports 465/587/2465/2587) |
-| `SMTP_USER` | `resend` | Yes (literal string `resend` — Resend's fixed SMTP username) |
-| `SMTP_PASS` | `re_your_api_key` | Yes (Resend API key) |
-| `SMTP_FROM` | `kontak@warga.jp` | Yes for Resend — must be on a domain verified in Resend; falls back to `SMTP_USER` |
-| `NOTIFY_TO` | `you@personal.com` | No (defaults to `SMTP_USER`; set to the inbox Cloudflare forwards to) |
-
-`SMTP_FROM` is the address recipients see in their inbox and the SMTP envelope sender. It must be on a domain you have verified in Resend. `SMTP_USER` is the auth credential only (`resend` literal) — do not confuse the two.
+| `SMTP_HOST` | `smtp.gmail.com` | Yes (disables notifications if missing) |
+| `SMTP_PORT` | `587` | No (defaults to `587`) |
+| `SMTP_USER` | `you@gmail.com` | Yes |
+| `SMTP_PASS` | app password | Yes |
+| `NOTIFY_TO` | `you@gmail.com` | No (defaults to `SMTP_USER`) |
 
 If `SMTP_HOST` is empty, all `lib/notify` calls are no-ops — safe for local dev without any SMTP setup.
-
-#### Inbound vs outbound
-
-**Cloudflare Email Routing handles inbound only.** It forwards `*@warga.jp` to your personal inbox; there are no Cloudflare SMTP credentials and nothing to configure in the app for inbound. Outbound notification emails are sent by the app via Resend SMTP (the vars above). Do not put Cloudflare hostnames in `SMTP_HOST`.
-
-For the `kontak@warga.jp` reply flow specifically: the Resend domain verification also powers the Gmail "Send mail as" alias. When replying to a contact message, always switch the Gmail From to `kontak@warga.jp` before sending — see `docs/rules/admin-dashboard.md` § Kontak (contact form) tracking.
 
 ### Adding future notification channels (webhook, WhatsApp)
 

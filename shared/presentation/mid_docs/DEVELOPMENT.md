@@ -29,12 +29,10 @@ Browser
 git clone <repo-url>
 cd wargajp
 templ generate
-APP_ENV=development go run main.go
+go run .
 ```
 
 Server starts on `:8080`. Open `http://machine.local:8080`.
-
-Use `APP_ENV=production go run main.go` to run in production mode locally (e.g. to test SMTP or cookie behaviour).
 
 ---
 
@@ -55,10 +53,9 @@ sudo nano /etc/hosts
 ::1         machine.local
 ```
 
-### All 47 prefecture subdomains + national — IPv4
+### All 47 prefecture subdomains — IPv4
 
 ```
-127.0.0.1   national.machine.local
 127.0.0.1   aichi.machine.local
 127.0.0.1   akita.machine.local
 127.0.0.1   aomori.machine.local
@@ -108,10 +105,9 @@ sudo nano /etc/hosts
 127.0.0.1   yamanashi.machine.local
 ```
 
-### All 47 prefecture subdomains + national — IPv6
+### All 47 prefecture subdomains — IPv6
 
 ```
-::1   national.machine.local
 ::1   aichi.machine.local
 ::1   akita.machine.local
 ::1   aomori.machine.local
@@ -161,7 +157,7 @@ sudo nano /etc/hosts
 ::1   yamanashi.machine.local
 ```
 
-> You don't need all 48. Only add the prefectures you're actively testing. The apex entries (`machine.local`) are always required.
+> You don't need all 47. Only add the prefectures you're actively testing. The apex entries (`machine.local`) are always required.
 
 ---
 
@@ -170,7 +166,7 @@ sudo nano /etc/hosts
 `main.go` calls `constant.SetDomainName("machine.local")` when `APP_ENV` is unset (development mode). The `subdomainMiddleware` extracts the part before the first `.` in the `Host` header:
 
 - `machine.local` → no subdomain → serves apex routes (`/`, `/kontak`, admin, etc.)
-- `tokyo.machine.local` → subdomain `tokyo` → scopes all content queries to `WHERE prefecture = 'tokyo'` in `dbs/app.db`
+- `tokyo.machine.local` → subdomain `tokyo` → opens `dbs/tokyo.db`
 
 Routes that require a subdomain (e.g. `/komunitas`, `/panduan/*`) return 404 on the apex domain — this matches production behaviour.
 
@@ -180,13 +176,13 @@ Routes that require a subdomain (e.g. `/komunitas`, `/panduan/*`) return 404 on 
 
 `migrations.ExecuteMigration()` runs at startup and auto-creates any missing SQLite DB files in `dbs/`. No manual setup needed — just run the app and the files appear.
 
-All DB files are opened with WAL journal mode (`_journal_mode=WAL`), 5-second busy timeout, and a connection pool sized to `max(NumCPU×2, 4)`. In dev you will see `-wal` and `-shm` sidecar files alongside each `.db` file — that is normal and expected.
+All DB files are opened with WAL journal mode (`_journal_mode=WAL`), 5-second busy timeout, and `SetMaxOpenConns(1)`. In dev you will see `-wal` and `-shm` sidecar files alongside each `.db` file — that is normal and expected.
 
 Files created on first run:
 
 | File | Purpose |
 |---|---|
-| `dbs/app.db` | All content: panduan, komunitas, reports — all prefectures in one file with a `prefecture` column |
+| `dbs/<prefecture>.db` | One per prefecture — content (panduan, komunitas, etc.) |
 | `dbs/user.db` | Registered users and sessions |
 | `dbs/admin.db` | Admin accounts, sessions, and featured content |
 | `dbs/analytics.db` | Page-view analytics (see Section 9 below) |
@@ -230,13 +226,6 @@ Then in another terminal:
 go run .
 ```
 
-If `templ generate` reports `updates=0` but changes were made, the generator's cache may be stale. Delete the affected `_templ.go` file(s) first:
-
-```bash
-rm presentation/some/view/file_templ.go
-templ generate
-```
-
 ---
 
 ## 7. Environment Variables
@@ -244,14 +233,13 @@ templ generate
 | Variable | Dev default | Effect |
 |---|---|---|
 | `APP_ENV` | `""` | Empty = development; set to `"production"` for prod mode |
-| `SMTP_HOST` | unset | Email notifications disabled when unset (use `smtp.resend.com` in prod) |
-| `SMTP_PORT` | unset | `465` for Resend |
-| `SMTP_USER` | unset | `resend` (literal) for Resend |
-| `SMTP_PASS` | unset | Resend API key (`re_…`) |
-| `SMTP_FROM` | unset | From address on outgoing mail (defaults to `SMTP_USER`; use `kontak@warga.jp` in prod) |
-| `NOTIFY_TO` | unset | Inbox Cloudflare Email Routing forwards `kontak@warga.jp` to |
+| `SMTP_HOST` | unset | Email notifications disabled when unset |
+| `SMTP_PORT` | unset | |
+| `SMTP_USER` | unset | |
+| `SMTP_PASS` | unset | |
+| `NOTIFY_TO` | unset | Recipient for submission/contact notifications |
 
-SMTP is fully optional in development — form submissions save to the DB normally and `/admin/kontak` records every contact message; only the email notification is skipped. See `docs/rules/forms.md` § Environment variables for Resend values and an explanation of how inbound (Cloudflare Email Routing) and outbound (Resend SMTP) are separate.
+SMTP is fully optional in development — form submissions save to the DB normally; only the email notification is skipped.
 
 ---
 
@@ -300,28 +288,4 @@ curl -sI http://machine.local:8080/tidak-ada     # → HTTP 404 with styled page
 
 # Analytics dashboard (not logged in → redirect, not 500)
 curl -sI http://machine.local:8080/admin/analitik | head -2
-```
-
----
-
-## 10. Production Build & Deploy
-
-Full instructions in **[`docs/deploy.md`](../deploy.md)** — CGo cross-compilation, prerequisites, `build-prod.sh`, CSS versioning, `deploy.sh`, and Caddyfile deploy procedure.
-
----
-
-## 11. Testing
-
-```bash
-# Run all tests
-go test ./...
-
-# Run tests for a specific package
-go test ./domain/prefecture/repository/...
-
-# Run with verbose output
-go test -v ./...
-
-# Run a specific test
-go test -v -run TestGetAllPrefectures ./domain/prefecture/repository/...
 ```
